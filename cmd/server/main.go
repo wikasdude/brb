@@ -1,3 +1,8 @@
+// @title BRB Mid Service Platform API
+// @version 1.0
+// @description Swagger documentation for BRB Microservice platform
+// @host localhost:8080
+// @BasePath /
 package main
 
 import (
@@ -8,7 +13,11 @@ import (
 	"log"
 	"net/http"
 
+	_ "brb-midsvc-platform/docs"
+
 	_ "github.com/lib/pq"
+
+	httpSwagger "github.com/swaggo/http-swagger"
 )
 
 func main() {
@@ -34,6 +43,7 @@ func main() {
 	http.HandleFunc("/health", h.HealthCheck)
 	http.HandleFunc("/summary/vendor/", h.VendorSummary)
 	http.HandleFunc("/bookings", h.CreateBooking)
+	http.Handle("/swagger/", httpSwagger.WrapHandler)
 
 	log.Println("🚀 Server started on :8080")
 	log.Fatal(http.ListenAndServe(":8080", nil))
